@@ -5,7 +5,7 @@ Base = declarative_base()
 
 
 class VideosTable(Base):
-    __tablename__ = 'videos'
+    __tablename__ = "videos"
     videoId = Column(String, primary_key=True, nullable=False, unique=True)
     title = Column(String, nullable=False)
     description = Column(String, nullable=False)

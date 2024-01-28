@@ -98,3 +98,6 @@ echo "GET http://localhost:8080/videos/?page=1" | vegeta attack -duration=120s -
 ## System Design
 ### High Level Architecture
 <img src="docs/architecture.png">
+
+### Flowchart
+<img src="docs/logic_flowchart.png">

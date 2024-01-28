@@ -1,15 +1,14 @@
 class KeyProvider:
-    def __init__(self,keys=None):
+    def __init__(self, keys=None):
         if keys is None:
             import os
-            KEYS = os.environ.get('KEYS', ['invalid-api-key'])
+
+            KEYS = os.environ.get("KEYS", ["invalid-api-key"])
             self.keys = eval(KEYS.replace("'", '"'))
         else:
             self.keys = keys
         self.nextKey = 0
-        self.keyUsage = {
-            self.keys.index(key): 0 for key in self.keys
-        }
+        self.keyUsage = {self.keys.index(key): 0 for key in self.keys}
 
     def _log_key_usage(self):
         for key, usage in self.keyUsage.items():
