@@ -1,74 +1,75 @@
-version: '3'
+version: "3"
 
 services:
-    nginx:
-      image: nginx:1.25
-      container_name: youtube_api_nginx
-      volumes:
-        - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      ports:
-        - "8080:80"
-      depends_on:
-        - api
-      networks:
-        - load_balancer
+  nginx:
+    image: nginx:1.25
+    container_name: youtube_api_nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks:
+      - load_balancer
 
-    database:
-      image: postgres:16
-      container_name: youtube_api_postgres
-      environment:
-        POSTGRES_PASSWORD: lLhi3zdgLRQjLfz
-        PGDATA: /var/lib/postgresql/data/pgdata
-      volumes:
-        - postgres_data:/var/lib/postgresql/data/pgdata
-      networks:
-        - db
+  database:
+    image: postgres:16
+    container_name: youtube_api_postgres
+    environment:
+      POSTGRES_PASSWORD: lLhi3zdgLRQjLfz
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/pgdata
+    networks:
+      - db
+    ports:
+      - "5432:5432"
 
-    adminer:
-      image: adminer:4.8.1
-      container_name: youtube_api_adminer
-      ports:
-        - "5000:8080"
-      networks:
-        - db
-      depends_on:
-        - database
+  adminer:
+    image: adminer:4.8.1
+    container_name: youtube_api_adminer
+    ports:
+      - "5000:8080"
+    networks:
+      - db
+    depends_on:
+      - database
 
-    db_updater:
-      image: yt_db_updater
-      build: ./db_updater
-      env_file:
-        - '.env'
-      networks:
-        - db
-      depends_on:
-        - database
-        - cache
+  db_updater:
+    image: yt_db_updater
+    build: ./db_updater
+    env_file:
+      - ".env"
+    networks:
+      - db
+    depends_on:
+      - database
+      - cache
 
-    api:
-      image: yt_api
-      build: ./api
-      deploy:
-        replicas: 5
-      env_file:
-        - '.env'
-      networks:
-        - load_balancer
-        - db
-      depends_on:
-        - database
+  api:
+    image: yt_api
+    build: ./api
+    deploy:
+      replicas: 1
+    env_file:
+      - ".env"
+    networks:
+      - load_balancer
+      - db
+    depends_on:
+      - database
 
-    cache:
-      image: redis:7.2.4
-      container_name: youtube_api_redis
-      volumes:
-        - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
-        - redis_data:/data
-      networks:
-        - db
-      depends_on:
-        - database
-
+  cache:
+    image: redis:7.2.4
+    container_name: youtube_api_redis
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - redis_data:/data
+    networks:
+      - db
+    depends_on:
+      - database
 
 networks:
   load_balancer:
