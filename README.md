@@ -2,7 +2,7 @@
 
 ## Setup Instructions
 1. Copy `.env.example` to `.env`
-2. Create Youtube API Keys and replace the `<key1>` and `<key2>` placeholders. Feel free to add more if you like. [Here]() is a tutorial to create an API Key.
+2. Create Youtube API Keys and replace the `<key1>` and `<key2>` placeholders. Feel free to add more if you like. [Here](https://scribehow.com/shared/Get_API_key_for_Fampay_Assignment__yJsvVKDUT4SFxx3DJ4Yh9Q) is a tutorial to create an API Key.
 2. Unless you want to change ports and other settings, you should be good to go!
 
 ## Running Services
