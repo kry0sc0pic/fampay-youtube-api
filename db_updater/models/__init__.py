@@ -1,5 +1,4 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, TIMESTAMP
+from sqlalchemy import Column, String, TIMESTAMP
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()

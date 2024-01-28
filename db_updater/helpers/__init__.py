@@ -1,5 +1,4 @@
 import datetime
-import requests
 from typing import Union
 import requests
 
@@ -7,12 +6,16 @@ def datetime_to_iso(date: datetime.datetime) -> str:
     date = date - datetime.timedelta(microseconds=date.microsecond)
     return date.isoformat() + "Z"
 
+def iso_increment(date: str) -> str:
+    date = datetime.datetime.fromisoformat(date[:-1])
+    date = date + datetime.timedelta(seconds=1)
+    return datetime_to_iso(date)
 
 def get_videos(query: str, publishedAfter: str, key: str = None, limit: int = 50) -> list:
     if len(query) == 0:
-        raise ValueError("No query provided")
+        return []
     if key is None:
-        raise ValueError("No key provided")
+        return []
 
     page_token = None
     videos_retrieved = 0
@@ -40,7 +43,9 @@ def get_videos(query: str, publishedAfter: str, key: str = None, limit: int = 50
         res = requests.get("https://www.googleapis.com/youtube/v3/search", params=params)
 
         if res.status_code != 200:
-            raise ValueError("Invalid response from Youtube API")
+            print(res.status_code)
+            print(res.json())
+            return []
 
         try:
             data = res.json()
@@ -77,7 +82,9 @@ def get_video_full_description(videoId: str, key: str = None) -> Union[str, None
         }
     )
     if res.status_code != 200:
-        raise ValueError("Invalid response from Youtube API")
+        print(res.status_code)
+        print(res.json())
+        return None
     try:
         return None if len(items := res.json()['items']) == 0 else items[0]['snippet']['description']
     except Exception as e:
