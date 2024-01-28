@@ -42,7 +42,7 @@ services:
       deploy:
         replicas: 2
       environment:
-        POSTGRES_URL: postgresql://postgres:lLhi3zdgLRQjLfz@database:5432/youtube
+        POSTGRES_URL: postgresql://postgres:lLhi3zdgLRQjLfz@database:5432/postgres
       networks:
         - load_balancer
         - db
