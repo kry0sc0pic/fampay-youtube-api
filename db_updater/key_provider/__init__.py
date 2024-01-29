@@ -20,9 +20,8 @@ class KeyProvider:
         """
         Invalidates a key, making it unusable
         """
-        i = self.keys.index(key)
-        self.keyUsage.pop(i)
-        self.keys.pop(i)
+        self.keyUsage.pop(key)
+        self.keys.remove(key)
         self.nextKey = sorted(self.keyUsage.items(), key=lambda x: x[1])[0][0]
         if len(self.keys) == 0:
             raise ValueError("No keys left")
