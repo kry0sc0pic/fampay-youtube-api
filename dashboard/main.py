@@ -6,7 +6,6 @@ import os
 import datetime as dt
 
 st.header(f"Query: `financial news`")
-st.set_page_config(page_title="YouTube Dashboard", page_icon="📺", layout="wide")
 st.sidebar.header("YouTube API Dashboard")
 POSTGRES_URL = os.environ.get("POSTGRES_URL")
 
