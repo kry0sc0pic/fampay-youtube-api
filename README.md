@@ -18,7 +18,7 @@ You can spin up/down all the services using docker compose using the following c
 
 ```bash
 # Start All Services
-docker compose up -d
+docker compose up -d --build
 
 # Stop All Services
 docker compose down
@@ -34,6 +34,10 @@ docker compose down
 <img src="docs/adminer.png">
 
 **URL ->** [http://localhost:5000](http://localhost:5000)
+
+**Credentials**
+
+<img src="docs/adminer_credentials.png">
 
 ## API Documentation
 <img src="docs/api.png">
