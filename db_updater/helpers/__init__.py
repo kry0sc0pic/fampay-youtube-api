@@ -1,8 +1,6 @@
 import datetime
 from typing import Union
 import requests
-from ..key_provider import KeyProvider
-
 def datetime_to_iso(date: datetime.datetime) -> str:
     date = date - datetime.timedelta(microseconds=date.microsecond)
     return date.isoformat() + "Z"
@@ -15,7 +13,7 @@ def iso_increment(date: str) -> str:
 
 
 def get_videos(
-    query: str, publishedAfter: str, key_provider: KeyProvider, limit: int = 50
+    query: str, publishedAfter: str, key_provider, limit: int = 50
 ) -> list:
     key = key_provider.key(100)
     if len(query) == 0:
@@ -82,7 +80,7 @@ def get_videos(
     return videos
 
 
-def get_video_full_description(videoId: str, key_provider: KeyProvider,) -> Union[str, None]:
+def get_video_full_description(videoId: str, key_provider) -> Union[str, None]:
     key = key_provider.key(1)
     if key is None:
         raise ValueError("No key provided")
