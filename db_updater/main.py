@@ -52,10 +52,10 @@ while True:
         print(f"Retrieved a total of {len(videos)} videos")
     # used to initialize database with a maximum of 200 uploads after yesterday.
     else:
-        print(f"Retrieving 200 initial videos after {lastTimeStamp}")
+        print(f"Retrieving 50 initial videos after {lastTimeStamp}")
         retrieveAll = True
         videos = get_videos(
-            QUERY, lastTimeStamp, key=keyProvider.key(cost=100), limit=200
+            QUERY, lastTimeStamp, key=keyProvider.key(cost=100), limit=50
         )
         print(f"Retrieved a total of {len(videos)} videos")
     updated = False

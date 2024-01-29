@@ -23,6 +23,7 @@ docker compose up -d --build
 # Stop All Services
 docker compose down
 ```
+***Please Note:*** On the first start up the API response will be empty for some time as the process has to populate the initial entries in the database and cache. To initialize the database, the process loads in the 50 most recent videos published less than one day ago.
 
 ## Accessing Services
 ### Dashboard
