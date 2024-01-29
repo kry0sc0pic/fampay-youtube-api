@@ -61,7 +61,7 @@ Returns the videos from the database in batches of 20. Supports pagination.
 - if the value of page is lesser than 1 it will return the first page
 
 ## Testing Results
-I ran tests with 1,2 and replicas. The latency for 99.5% requests is consistently under 10ms, even when 5 containers were faced with 10x the load that 1&2 Container tests faced. The latency starts to rapidly increase after the 99.5% percentile and flattens out near 60-80ms.
+I ran tests with 1,2 and 5 replicas. The latency for 99.5% requests were consistently under 10ms, even when 5 replicas were faced with 10x the load that 1&2 replicas faced. The latency starts to rapidly increase after the 99.5% percentile and flattens out near 60-80ms.
 
 ### Testing Methodology
 
@@ -84,7 +84,7 @@ Results File: results_single_instance.hgrm
 ***Resource Utilization***
 <img src="testing_results/resources_single_instance.png">
 
-**Vegeta Command****
+**Vegeta Command**
 ```bash
 echo "GET http://localhost:8080/videos/?page=1" | vegeta attack -duration=120s -rate 100 | tee results.bin | vegeta report -type=hdrplot >> results_single_instance.hgrm
 ```
@@ -102,7 +102,7 @@ Results File: results_two_instance.hgrm
 ***Resource Utilization***
 <img src="testing_results/resources_two_instances.png">
 
-**Vegeta Command****
+**Vegeta Command**
 ```bash
 echo "GET http://localhost:8080/videos/?page=1" | vegeta attack -duration=120s -rate 100 | tee results.bin | vegeta report -type=hdrplot >> results_two_instances.hgrm
 ```
@@ -120,7 +120,7 @@ Results File: results_five_instances.hgrm
 ***Resource Utilization***
 <img src="testing_results/resources_two_instances.png">
 
-**Vegeta Command****
+**Vegeta Command**
 ```bash
 echo "GET http://localhost:8080/videos/?page=1" | vegeta attack -duration=120s -rate 1000 | tee results.bin | vegeta report -type=hdrplot >> results_five_instances.hgrm
 ```
