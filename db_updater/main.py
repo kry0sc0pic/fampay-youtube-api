@@ -47,7 +47,7 @@ while True:
     if retrieveAll:
         print(f"Retrieving all videos after {lastTimeStamp}")
         videos = get_videos(
-            QUERY, lastTimeStamp, key=keyProvider.key(cost=100), limit=-1
+            QUERY, lastTimeStamp, key_provider=keyProvider, limit=-1
         )
         print(f"Retrieved a total of {len(videos)} videos")
     # used to initialize database with a maximum of 200 uploads after yesterday.
@@ -55,7 +55,7 @@ while True:
         print(f"Retrieving 50 initial videos after {lastTimeStamp}")
         retrieveAll = True
         videos = get_videos(
-            QUERY, lastTimeStamp, key=keyProvider.key(cost=100), limit=50
+            QUERY, lastTimeStamp, key_provider=keyProvider, limit=50
         )
         print(f"Retrieved a total of {len(videos)} videos")
     updated = False
@@ -73,7 +73,7 @@ while True:
         ):  # end with ... means the description was truncated
             print(f"Incomplete description for video {video['id']['videoId']}")
             full_description = get_video_full_description(
-                video["id"]["videoId"], key=keyProvider.key(cost=1)
+                video["id"]["videoId"], key_provider=keyProvider
             )
             if full_description is not None:
                 print(f"Full description retrieved")
