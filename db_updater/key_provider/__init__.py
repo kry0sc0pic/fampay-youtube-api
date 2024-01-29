@@ -2,30 +2,30 @@ class KeyProvider:
     def __init__(self, keys=None):
         if keys is None:
             import os
-
             KEYS = os.environ.get("KEYS", ["invalid-api-key"])
             self.keys = eval(KEYS.replace("'", '"'))
         else:
             self.keys = keys
-        self.nextKey = 0
-        self.keyUsage = {self.keys.index(key): 0 for key in self.keys}
+        self.nextKey = self.keys[0]
+        self.keyUsage = {key: 0 for key in self.keys}
 
     def _log_key_usage(self):
         for key, usage in self.keyUsage.items():
-            print(f"Key {self.keys[key][0:10]}: {usage}")
+            print(f"Key {key[0:5]}..{key[10:]}: {usage} units")
 
+    """
+    Remove a key from the list of keys whose quota has been used up
+    """
     def remove_key(self, key):
         """
         Invalidates a key, making it unusable
         """
         i = self.keys.index(key)
+        self.keyUsage.pop(i)
         self.keys.pop(i)
-        if i == self.nextKey:
-            self.nextKey = sorted(self.keyUsage.items(), key=lambda x: x[1])[0][0]
-        del self.keyUsage[i]
+        self.nextKey = sorted(self.keyUsage.items(), key=lambda x: x[1])[0][0]
         if len(self.keys) == 0:
             raise ValueError("No keys left")
-
 
     """
     Returns the next key to use
@@ -34,7 +34,8 @@ class KeyProvider:
     """
 
     def key(self, cost=1) -> str:
-        self.keyUsage[(kIndex := self.nextKey)] += cost
+        self.keyUsage[self.nextKey] += cost
         self._log_key_usage()
+        key = self.nextKey
         self.nextKey = sorted(self.keyUsage.items(), key=lambda x: x[1])[0][0]
-        return self.keys[kIndex]
+        return key
