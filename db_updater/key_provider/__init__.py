@@ -14,6 +14,19 @@ class KeyProvider:
         for key, usage in self.keyUsage.items():
             print(f"Key {self.keys[key][0:10]}: {usage}")
 
+    def remove_key(self, key):
+        """
+        Invalidates a key, making it unusable
+        """
+        i = self.keys.index(key)
+        self.keys.pop(i)
+        if i == self.nextKey:
+            self.nextKey = sorted(self.keyUsage.items(), key=lambda x: x[1])[0][0]
+        del self.keyUsage[i]
+        if len(self.keys) == 0:
+            raise ValueError("No keys left")
+
+
     """
     Returns the next key to use
     

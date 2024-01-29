@@ -1,7 +1,7 @@
 import datetime
 from typing import Union
 import requests
-
+from ..key_provider import KeyProvider
 
 def datetime_to_iso(date: datetime.datetime) -> str:
     date = date - datetime.timedelta(microseconds=date.microsecond)
@@ -15,8 +15,9 @@ def iso_increment(date: str) -> str:
 
 
 def get_videos(
-    query: str, publishedAfter: str, key: str = None, limit: int = 50
+    query: str, publishedAfter: str, key_provider: KeyProvider, limit: int = 50
 ) -> list:
+    key = key_provider.key(100)
     if len(query) == 0:
         return []
     if key is None:
@@ -50,9 +51,13 @@ def get_videos(
         )
 
         if res.status_code != 200:
-            print(res.status_code)
-            print(res.json())
-            return []
+            if res.status_code == 403:
+                print("quota exceeded. invalidating key")
+                key_provider.remove_key(key)
+            else:
+                print(res.status_code)
+                print(res.json())
+                return []
 
         try:
             data = res.json()
@@ -77,7 +82,8 @@ def get_videos(
     return videos
 
 
-def get_video_full_description(videoId: str, key: str = None) -> Union[str, None]:
+def get_video_full_description(videoId: str, key_provider: KeyProvider,) -> Union[str, None]:
+    key = key_provider.key(1)
     if key is None:
         raise ValueError("No key provided")
     if len(videoId) != 11:
@@ -93,8 +99,12 @@ def get_video_full_description(videoId: str, key: str = None) -> Union[str, None
         },
     )
     if res.status_code != 200:
-        print(res.status_code)
-        print(res.json())
+        if res.status_code == 403:
+            print("quota exceeded. invalidating key")
+            key_provider.remove_key(key)
+        else:
+            print(res.status_code)
+            print(res.json())
         return None
     try:
         return (
