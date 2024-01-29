@@ -11,7 +11,12 @@ gh repo clone kry0sc0pic/fampay-youtube-api
 ```
 1. Copy `.env.example` to `.env`
 2. Create Youtube API Keys and replace the `<key1>` and `<key2>` placeholders. Feel free to add more if you like. [Here](https://scribehow.com/shared/Get_API_key_for_Fampay_Assignment__yJsvVKDUT4SFxx3DJ4Yh9Q) is a tutorial to create an API Key.
-2. Unless you want to change ports and other settings, you should be good to go!
+
+_Add atleast 2-3 api keys to the list for prolonged testing_
+
+Unless you want to change ports and other settings, you should be good to go!
+
+
 
 ## Starting / Stopping
 You can spin up/down all the services using docker compose using the following command.
