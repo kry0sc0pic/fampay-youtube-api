@@ -5,19 +5,31 @@
 2. Create Youtube API Keys and replace the `<key1>` and `<key2>` placeholders. Feel free to add more if you like. [Here](https://scribehow.com/shared/Get_API_key_for_Fampay_Assignment__yJsvVKDUT4SFxx3DJ4Yh9Q) is a tutorial to create an API Key.
 2. Unless you want to change ports and other settings, you should be good to go!
 
-## Running Services
-You can spin up all the services using docker compose using the following command.
+## Starting / Stopping
+You can spin up/down all the services using docker compose using the following command.
 
 ```bash
-docker-compose up -d
-```
+# Start All Services
+docker compose up -d
 
-## Stopping Services
-```bash
+# Stop All Services
 docker compose down
 ```
 
+## Accessing Services
+### Dashboard
+<img src="docs/streamlit.png">
+
+**URL ->** [http://localhost:8501](http://localhost:8501)
+
+### Adminer
+<img src="docs/adminer.png">
+
+**URL ->** [http://localhost:5000](http://localhost:5000)
+
 ## API Documentation
+<img src="docs/api.png">
+
 **Base URL:** `http://localhost:8080`
 
 ### GET /videos
