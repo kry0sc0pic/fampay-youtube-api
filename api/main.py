@@ -54,7 +54,7 @@ class Videos(Resource):
             session.query(VideosTable)
             .order_by(desc(VideosTable.publishedAt))
             .limit(20)
-            .offset((page - 1) * 20)
+            .offset(max(0,(page - 1)) * 20)
         )
 
         json_videos = []
