@@ -12,6 +12,7 @@ services:
       - api
     networks:
       - load_balancer
+    restart: unless-stopped
 
   database:
     image: postgres:16
@@ -23,6 +24,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/pgdata
     networks:
       - db
+    restart: unless-stopped
 
   adminer:
     image: adminer:4.8.1
@@ -33,6 +35,7 @@ services:
       - db
     depends_on:
       - database
+    restart: unless-stopped
 
   db_updater:
     image: yt_db_updater
@@ -44,6 +47,7 @@ services:
     depends_on:
       - database
       - cache
+    restart: unless-stopped
 
   api:
     image: yt_api
@@ -57,6 +61,7 @@ services:
       - db
     depends_on:
       - database
+    restart: unless-stopped
 
   dashboard:
     image: yt_dashboard
@@ -69,6 +74,7 @@ services:
       - database
     ports:
       - "8501:8501"
+    restart: unless-stopped
 
   cache:
     image: redis:7.2.4
@@ -80,6 +86,7 @@ services:
       - db
     depends_on:
       - database
+    restart: unless-stopped
 
 networks:
   load_balancer:
