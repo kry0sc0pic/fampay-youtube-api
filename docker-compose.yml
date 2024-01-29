@@ -23,8 +23,6 @@ services:
       - postgres_data:/var/lib/postgresql/data/pgdata
     networks:
       - db
-    ports:
-      - "5432:5432"
 
   adminer:
     image: adminer:4.8.1
@@ -59,6 +57,18 @@ services:
       - db
     depends_on:
       - database
+
+  dashboard:
+    image: yt_dashboard
+    build: ./dashboard
+    env_file:
+      - ".env"
+    networks:
+      - db
+    depends_on:
+      - database
+    ports:
+      - "8501:8501"
 
   cache:
     image: redis:7.2.4
