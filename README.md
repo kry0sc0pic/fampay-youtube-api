@@ -1,5 +1,11 @@
 # Fampay Backend Assignment (Youtube API)
 
+## Scope for Improvement
+1. Cursor Based Pagination
+2. Rate Limits
+3. Re-activation of Keys
+4. Cache Invalidation Edge Cases
+
 ## Setup Instructions
 0. Clone the repository
 ```bash
